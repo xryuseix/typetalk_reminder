@@ -41,6 +41,6 @@ jobs:
           tag_name: v1.0.0
           files: |
             assets/template.xlsx
-            dist/index.jsact
+            dist/index.js
         
   
