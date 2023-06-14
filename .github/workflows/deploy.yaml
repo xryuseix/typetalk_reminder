@@ -35,6 +35,8 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
+          name: Latest Releases
+          tag_name: v1.0.0
           files: |
             assets/template.xlsx
             dist/index.jsact
