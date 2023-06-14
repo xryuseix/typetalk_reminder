@@ -28,6 +28,10 @@ class Schedule {
       `${this.year}/${this.month}/${this.day} ${this.hour}:${this.time}:00`
     );
   }
+
+  get hasNan() {
+    return Number.isNaN(this.year) || Number.isNaN(this.month) || Number.isNaN(this.day) || Number.isNaN(this.hour) || Number.isNaN(this.time);
+  }
 }
 
 export default Schedule;

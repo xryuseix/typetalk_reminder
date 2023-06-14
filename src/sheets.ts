@@ -13,14 +13,18 @@ export function getMembers() {
     .filter((m) => m !== "");
 }
 
-export function getTodaysItems(config: Config, callback: (s: Schedule, n: Date) => boolean) {
+export function getTodaysItems(
+  config: Config,
+  callback: (s: Schedule, n: Date) => boolean
+) {
   const sheet =
     SpreadsheetApp.getActiveSpreadsheet().getSheetByName("schedule");
   if (sheet === null) {
-    return [];
+    return {schedule: [], hasNaN: false};
   }
   const now = new Date();
   const rows = sheet.getDataRange().getValues().slice(1);
+  let hasNaN = false;
 
   const todaysItems = rows
     .flatMap((row) => {
@@ -34,6 +38,9 @@ export function getTodaysItems(config: Config, callback: (s: Schedule, n: Date) 
         row[5],
         config.defaultContent
       );
+      if (schedule.hasNan) {
+        hasNaN = true;
+      }
       if (callback(schedule, now)) {
         return [schedule];
       }
@@ -47,7 +54,7 @@ export function getTodaysItems(config: Config, callback: (s: Schedule, n: Date) 
       }
     });
 
-  return todaysItems;
+  return { schedule: todaysItems, hasNaN };
 }
 
 export function initConfig() {
@@ -62,8 +69,8 @@ export function initConfig() {
     morningMessage: values[1][1],
     justBeforeMessage: values[2][1],
     zoomUrl: values[3][1],
-    typetalkUrl: values[4][1],
-    typetalkToken: values[5][1],
+    typetalkToken: values[4][1],
+    typetalkUrl: values[5][1],
   };
   return config;
 }

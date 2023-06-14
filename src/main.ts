@@ -30,11 +30,14 @@ export function dailyMain() {
       schedule.day === now.getDate()
     );
   };
-  const schedule = getTodaysItems(config, cb);
-
+  const { schedule, hasNaN } = getTodaysItems(config, cb);
   if (schedule.length === 0) {
     return;
   }
+  if(hasNaN) {
+    console.warn("Non-numeric characters are entered in the cell that means any date and time");
+  }
+
   const scheduleText = schedule
     .map((sche) => {
       return `・ ${pad(sche.hour, 2)}時${pad(sche.time, 2)}分: ${sche.content}`;
@@ -66,11 +69,14 @@ export function hourAgoMain() {
       return false;
     }
   };
-  const schedule = getTodaysItems(config, cb);
-
+  const { schedule, hasNaN } = getTodaysItems(config, cb);
   if (schedule.length === 0) {
     return;
   }
+  if(hasNaN) {
+    console.warn("Non-numeric characters are entered in the cell that means any date and time");
+  }
+
   const scheduleText = schedule
     .map((sche) => {
       return `・ ${sche.month}/${sche.day} ${pad(sche.hour, 2)}:${pad(
